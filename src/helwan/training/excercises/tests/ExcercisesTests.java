@@ -104,6 +104,17 @@ public class ExcercisesTests {
 		
 	}
 	
+	@Test
+	public void alertExcercise(){
+		
+		driver.get("http://toolsqa.com/automation-practice-switch-windows/");
+		driver.findElement(By.id("timingAlert")).click();
+		driver.switchTo().alert().accept();
+		
+		
+	}
+	
+	
 	@After
 	public void tearDown(){
 		driver.close();
