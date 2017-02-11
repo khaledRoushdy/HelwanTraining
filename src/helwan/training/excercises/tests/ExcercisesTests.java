@@ -1,10 +1,13 @@
 package helwan.training.excercises.tests;
 
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -68,14 +71,38 @@ public class ExcercisesTests {
 	public void waitExcercise(){
 		
 		driver.get("http://google.com");
+		driver.findElement(By.linkText("English")).click();
 		driver.findElement(By.id("lst-ib")).sendKeys("itworx");
-		driver.findElement(By.name("btnK")).click();
+		driver.findElement(By.id("lst-ib")).sendKeys(Keys.ESCAPE);
+		//driver.findElement(By.name("btnK")).click();
 		WebDriverWait wait=new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"hdtb-msb\"]/div[1]/div[2]/a")));
 		driver.findElement(By.xpath("//*[@id=\"hdtb-msb\"]/div[1]/div[2]/a")).click();
 		
 	}
 	
+	@Test
+	public void multipleWindowExcercise(){
+		
+		driver.get("http://toolsqa.com/automation-practice-switch-windows/");
+		driver.findElement(By.id("button1")).click();
+		String oldWindow = driver.getWindowHandle();
+		System.out.println(oldWindow);
+		Set<String> allWindows= driver.getWindowHandles();
+		
+		
+		for (String w : allWindows){
+			
+			if(!w.equals(oldWindow)){
+				driver.switchTo().window(w);
+				System.out.println(w);
+				driver.manage().window().maximize();
+			}
+		}
+		
+		driver.switchTo().window(oldWindow);
+		
+	}
 	
 	@After
 	public void tearDown(){
